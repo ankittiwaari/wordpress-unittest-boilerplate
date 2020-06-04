@@ -10,8 +10,7 @@ spl_autoload_register(function ($class_name) {
 
     $class_paths = [
         __DIR__ . '/src/' . $class_name . '.php',
-        __DIR__ . '/src/' . $theme_name . '/class-' . $class_name . '.php',
-        __DIR__ . '/src/onecom-moments/classes/class-moments.php',
+        __DIR__ . '/src/' . $theme_name . '/class-' . $class_name . '.php',        
     ];
 
     foreach ($class_paths as $path) {
@@ -31,22 +30,22 @@ $test_lib_path = __DIR__ . '/wp-test-lib/tests/phpunit';
 
 
 if (!file_exists($test_lib_path . '/includes/functions.php')) {
-    echo "Could not find $test_lib_path/includes/functions.php, have you run bin/install-wp-tests.sh ?" . PHP_EOL; // WPCS: XSS ok.
+    echo "Could not find $test_lib_path/includes/functions.php" . PHP_EOL; 
     exit(1);
 }
 
-// Give access to tests_add_filter() function.
+// tests_add_filter() to be made accessible
 require_once $test_lib_path . '/includes/functions.php';
 
 /**
  * Manually load the plugin being tested.
  */
-function _manually_load_plugin()
+function aoc_load_plugins()
 {
 
 }
 
-tests_add_filter('muplugins_loaded', '_manually_load_plugin');
+tests_add_filter('muplugins_loaded', 'aoc_load_plugins');
 
 // Start up the WP testing environment.
 require $test_lib_path . '/includes/bootstrap.php';
